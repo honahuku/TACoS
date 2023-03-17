@@ -1,0 +1,10 @@
+# コード生成
+あなたは優秀なプログラマです。
+Slackで/hello_slackというスラッシュコマンドを送信すると"Hello, Slack!"と返すチャットボットをGoogle App Scriptsでなるべく簡単に作ってください。
+ただし、このコードはOAuth2にて特定のGoogleアカウントでログインしたユーザーのみ実行できるようにしてください。
+この認証の仕組みはGASに用意されたapps-script-oauth2というOAuth2のライブラリを使って書いてください。
+apps-script-oauth2というライブラリは、Google Apps Script用のOAuth2.0処理ライブラリで、Googleが管理するGitHubの「Google Workspace」内で配布されています。
+apps-script-oauth2を使い特定のGoogleアカウントでログインしたユーザーのみ実行できるようにするための認証処理を記述します。
+この処理では、Google API Consoleから取得したOAuth 2.0クライアントIDとクライアントシークレットを使用します。
+SlackのSlash Commandsを参考にして、/hello_slackというスラッシュコマンドを作成し、そのリクエストURLにGoogle Apps ScriptのウェブアプリケーションURLを設定します。
+Google Apps ScriptのdoPost(e)関数を記述し、eパラメータからスラッシュコマンドの入力値やユーザー情報などを取得し、"Hello, Slack!"というテキストメッセージを返すようにします。
