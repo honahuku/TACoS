@@ -1,0 +1,132 @@
+openapi: 3.0.0
+info:
+  title: Attendance Management API
+  version: 1.0.0
+paths:
+  security:
+    - GoogleAuth:
+        - openid
+        - profile
+        - email
+  /users:
+    post:
+      security: []
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      summary: Update a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      summary: Delete a user
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+  /schedule:
+    get:
+      summary: Get a list of schedules for a specific date range
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkSchedule'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        user_id:
+          type: string
+        role:
+          type: string
+          enum:
+            - employee
+            - part_time_employee
+            - contractor
+      required:
+        - user_id
+    WorkSchedule:
+      type: object
+      properties:
+        schedule_id:
+          type: string
+        user_id:
+          type: string
+        schedule_type:
+          type: string
+          enum:
+            - work
+            - break
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        work_date:
+          type: string
+          format: date
+      required:
+        - schedule_id
+        - user_id
+        - schedule_type
+        - start_time
+        - end_time
+        - work_date
+  securitySchemes:
+    GoogleAuth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          scopes:
+            openid: OpenID Connect
+            profile: User profile
+            email: User email
