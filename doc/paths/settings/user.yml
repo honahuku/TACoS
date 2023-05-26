@@ -1,0 +1,12 @@
+/settings/user:
+  put:
+    summary: Update user settings
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/UserSettingsUpdateRequest.yaml'
+    responses:
+      '200':
+        description: Successful update

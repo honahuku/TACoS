@@ -1,0 +1,12 @@
+type: object
+properties:
+  hourlyRate:
+    type: number
+  payPeriod:
+    type: string
+  timecardDeadline:
+    type: string
+required:
+  - hourlyRate
+  - payPeriod
+  - timecardDeadline

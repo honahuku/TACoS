@@ -1,0 +1,21 @@
+/timecard/{tcId}:
+  put:
+    summary: Update a timecard entry
+    parameters:
+      - $ref: '../components/parameters/TimecardIdParam.yaml'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/TimecardEntryRequest.yaml'
+    responses:
+      '200':
+        description: Successful update
+  delete:
+    summary: Delete a timecard entry
+    parameters:
+      - $ref: '../components/parameters/TimecardIdParam.yaml'
+    responses:
+      '200':
+        description: Successful deletion

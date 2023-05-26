@@ -1,0 +1,17 @@
+/timecard:
+  post:
+    summary: Record timecard entry
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/TimecardEntryRequest.yaml'
+    responses:
+      '200':
+        description: Successful timecard entry
+  get:
+    summary: Get list of timecard entries
+    responses:
+      '200':
+        description: Successful operation

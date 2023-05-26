@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  title: My API
+  version: 1.0.0
+paths:
+  $ref: 'paths/login.yml'
+  $ref: 'paths/signup.yml'
+  $ref: 'paths/logout.yml'
+  $ref: 'paths/shifts.yml'
+  $ref: 'paths/shifts/{shiftId}.yml'
+  $ref: 'paths/shifts/batch.yml'
+  $ref: 'paths/timecard.yml'
+  $ref: 'paths/timecard/{tcId}.yml'
+  $ref: 'paths/sync/{service}.yml'
+  $ref: 'paths/settings/user.yml'
+  $ref: 'paths/settings/workplace.yml'
+components:
+  responses:
+    $ref: 'responses/responses.yml'
+  schemas:
+    $ref: 'schemas/schemas.yml'
