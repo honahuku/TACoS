@@ -1,15 +1,14 @@
 openapi: 3.0.0
 servers:
-  - url: 'http://petstore.swagger.io/v2'
+  - url: 'https://example.com/'
 info:
   description: >-
-    This is a sample server Petstore server. For this sample, you can use the api key
-    `special-key` to test the authorization filters.
-  version: 1.0.1
-  title: OpenAPI Petstore
+    Time Attendance Coordination on Slack
+  version: 0.0.1
+  title: TACoS
   license:
-    name: Apache-2.0
-    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+    name: MIT
+    url: 'https://github.com/honahuku/TACoS/blob/main/LICENSE'
 tags:
   - name: auth
     description: 認証用エンドポイント
