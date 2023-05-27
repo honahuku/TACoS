@@ -1,8 +1,0 @@
-/shifts/{shiftId}:
-  get:
-    summary: Get details of a shift
-    parameters:
-      - $ref: '../components/parameters/ShiftIdParam.yaml'
-    responses:
-      '200':
-        description: Successful operation

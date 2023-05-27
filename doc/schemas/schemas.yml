@@ -1,8 +1,0 @@
-$ref: '../components/schemas/UserLoginRequest.yaml'
-$ref: '../components/schemas/UserSignupRequest.yaml'
-$ref: '../components/schemas/ShiftRequest.yaml'
-$ref: '../components/schemas/TimecardRequest.yaml'
-$ref: '../components/schemas/TimecardUpdateRequest.yaml'
-$ref: '../components/schemas/SyncServiceRequest.yaml'
-$ref: '../components/schemas/UserSettingsUpdateRequest.yaml'
-$ref: '../components/schemas/WorkplaceSettingsUpdateRequest.yaml'

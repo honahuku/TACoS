@@ -1,6 +1,0 @@
-type: object
-properties:
-  service:
-    type: string
-required:
-  - service

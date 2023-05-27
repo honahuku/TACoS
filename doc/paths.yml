@@ -1,0 +1,46 @@
+/auth/signup:
+  post:
+    tags:
+      - auth
+    operationId: signup
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/SignupRequest.yml'
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/SignupResponse.yml'
+      '400':
+        description: Invalid input
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/Error.yml'
+/auth/login:
+  post:
+    tags:
+      - auth
+    operationId: login
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LoginRequest.yml'
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/LoginResponse.yml'
+      '400':
+        description: Invalid input
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/Error.yml'

@@ -1,6 +1,0 @@
-/auth/logout:
-  post:
-    summary: User logout
-    responses:
-      '200':
-        description: Successful logout

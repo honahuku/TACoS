@@ -1,6 +1,0 @@
-/shifts:
-  get:
-    summary: Get list of shifts
-    responses:
-      '200':
-        description: Successful operation
