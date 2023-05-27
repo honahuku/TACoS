@@ -1,20 +1,31 @@
-name := "tacos-backend"
+version := "1.0.0"
+name := "openapi-client"
+organization := "org.openapitools"
 
-version := "1.0"
+scalaVersion := "2.12.13"
+crossScalaVersions := Seq(scalaVersion.value, "2.13.4")
 
-scalaVersion := "2.13.10"
-
-lazy val akkaVersion = "2.8.2"
-
-// Run in a separate JVM, to make sure sbt waits until all threads have
-// finished before returning.
-// If you want to keep the application running while executing other
-// sbt tasks, consider https://github.com/spray/sbt-revolver/
-fork := true
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
-  "ch.qos.logback" % "logback-classic" % "1.2.11",
-  "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion % Test,
-  "org.scalatest" %% "scalatest" % "3.1.4" % Test
+  "com.typesafe" % "config" % "1.4.1",
+  "com.typesafe.akka" %% "akka-actor" % "2.6.12",
+  "com.typesafe.akka" %% "akka-stream" % "2.6.12",
+  "com.typesafe.akka" %% "akka-http" % "10.2.3",
+  "org.json4s" %% "json4s-jackson" % "3.6.7",
+  "org.json4s" %% "json4s-ext" % "3.6.7",
+  "de.heikoseeberger" %% "akka-http-json4s" % "1.27.0",
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.4.1",
+  // test dependencies
+  "org.scalatest"     %% "scalatest"  % "3.2.3"   % "test",
+  "org.scalatestplus" %% "junit-4-13" % "3.2.3.0" % "test"
 )
+
+resolvers ++= Seq(Resolver.mavenLocal)
+
+scalacOptions := Seq(
+  "-unchecked",
+  "-deprecation",
+  "-feature"
+)
+
+publishArtifact in (Compile, packageDoc) := false
