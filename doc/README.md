@@ -2,6 +2,6 @@
 java -jar openapi-generator-cli.jar \
 generate \
 -i openapi.yml \
--g scala-akka \
+-g scala-akka-http-server \
 -o ../tacos-backend
 ```
