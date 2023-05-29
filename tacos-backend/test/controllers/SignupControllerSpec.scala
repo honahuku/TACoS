@@ -6,7 +6,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import play.api.libs.json._
 import models.SignupRequest
-import views.SignupResponse
+import models.SignupResponse
 
 class SignupControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
   // テストのスコープ内でSignupRequestのWritesとSignupResponseのReadsを定義し、テストでのJSON変換を可能にする

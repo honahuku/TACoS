@@ -3,7 +3,7 @@ package controllers
 import javax.inject._
 import play.api.mvc._
 import models.SignupRequest
-import views.SignupResponse
+import models.SignupResponse
 import play.api.libs.json.Json
 
 @Singleton
