@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - url: 'https://example.com/'
+  - url: 'http://localhost:9000'
 info:
   description: >-
     Time Attendance Coordination on Slack
