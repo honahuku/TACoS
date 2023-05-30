@@ -7,3 +7,9 @@ target
 /.project
 /.settings
 /RUNNING_PID
+
+# Scala (Metals)
+.metals/
+.bloop/
+.ammonite/
+metals.sbt
