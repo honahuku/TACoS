@@ -1,11 +1,11 @@
 package com.example.tacosbackend
 
 import cats.effect.IO
-import org.http4s.*
-import org.http4s.implicits.*
+import org.http4s._
+import org.http4s.implicits._
 import munit.CatsEffectSuite
 
-class HelloWorldSpec extends CatsEffectSuite:
+class HelloWorldSpec extends CatsEffectSuite {
 
   test("HelloWorld returns status code 200") {
     assertIO(retHelloWorld.map(_.status) ,Status.Ok)
@@ -15,7 +15,9 @@ class HelloWorldSpec extends CatsEffectSuite:
     assertIO(retHelloWorld.flatMap(_.as[String]), "{\"message\":\"Hello, world\"}")
   }
 
-  private[this] val retHelloWorld: IO[Response[IO]] = 
+  private[this] val retHelloWorld: IO[Response[IO]] = {
     val getHW = Request[IO](Method.GET, uri"/hello/world")
     val helloWorld = HelloWorld.impl[IO]
     TacosbackendRoutes.helloWorldRoutes(helloWorld).orNotFound(getHW)
+  }
+}

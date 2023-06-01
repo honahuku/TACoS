@@ -1,6 +1,7 @@
 package com.example.tacosbackend
 
-import cats.effect.{ExitCode, IO, IOApp}
+import cats.effect.{IO, IOApp}
 
-object Main extends IOApp.Simple:
+object Main extends IOApp.Simple {
   val run = TacosbackendServer.run[IO]
+}
