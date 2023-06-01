@@ -23,7 +23,8 @@ object TacosbackendServer:
       // in the underlying routes.
       httpApp = (
         TacosbackendRoutes.helloWorldRoutes[F](helloWorldAlg) <+>
-        TacosbackendRoutes.jokeRoutes[F](jokeAlg)
+        TacosbackendRoutes.jokeRoutes[F](jokeAlg) <+>
+        TacosbackendRoutes.sampleRoutes[F]
       ).orNotFound
 
       // With Middlewares in place

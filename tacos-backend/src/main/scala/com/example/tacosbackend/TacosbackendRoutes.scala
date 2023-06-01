@@ -4,6 +4,7 @@ import cats.effect.Sync
 import cats.syntax.all.*
 import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
+import org.http4s.implicits._
 
 object TacosbackendRoutes:
 
@@ -28,3 +29,4 @@ object TacosbackendRoutes:
           resp <- Ok(greeting)
         } yield resp
     }
+  def SampleRoutes[F[_]: Sync]: HttpRoutes[F] = SampleService.service
