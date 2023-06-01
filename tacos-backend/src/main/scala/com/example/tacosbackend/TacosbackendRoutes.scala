@@ -29,4 +29,5 @@ object TacosbackendRoutes:
           resp <- Ok(greeting)
         } yield resp
     }
-  def SampleRoutes[F[_]: Sync]: HttpRoutes[F] = SampleService.service
+
+  def sampleRoutes[F[_]: Sync]: HttpRoutes[F] = SampleService.service.asInstanceOf[HttpRoutes[F]]
