@@ -30,4 +30,6 @@ object TacosbackendRoutes {
         } yield resp
     }
   }
+
+  def sampleRoutes[F[_]: Sync](S: SampleService[F]): HttpRoutes[F] = S.service
 }
