@@ -10,12 +10,11 @@ import org.http4s.circe._
 case class Message(content: String)
 
 object SampleService {
-
-  def apply[F[_]: Concurrent]: SampleService[F] = new SampleService[F]
+  implicit def apply[F[_]: Concurrent]: SampleService[F] = new SampleService[F]
 
   class SampleService[F[_]: Concurrent] extends Http4sDsl[F] {
-
-    implicit val messageEncoder: EntityEncoder[F, Message] = jsonEncoderOf[F, Message]
+    implicit val messageEncoder: EntityEncoder[F, Message] =
+      jsonEncoderOf[F, Message]
     implicit val messageDecoder: EntityDecoder[F, Message] = jsonOf[F, Message]
 
     val service: HttpRoutes[F] = HttpRoutes.of[F] {
