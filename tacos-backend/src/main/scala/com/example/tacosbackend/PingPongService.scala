@@ -1,30 +1,27 @@
 package com.example.tacosbackend
 
-import cats.effect.Concurrent
-import cats.implicits._
-import io.circe.generic.auto._
-import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
+import cats.effect._
+import org.http4s._
 import org.http4s.dsl.Http4sDsl
+import io.circe.generic.auto._
 import org.http4s.circe._
 
-case class Message(content: String)
+case class Ping(value: String)
+case class Pong(value: String)
 
-object SampleService {
-  implicit def apply[F[_]: Concurrent]: SampleService[F] = new SampleService[F]
+class PingPongService extends Http4sDsl[IO] {
 
-  class SampleService[F[_]: Concurrent] extends Http4sDsl[F] {
-    implicit val messageEncoder: EntityEncoder[F, Message] =
-      jsonEncoderOf[F, Message]
-    implicit val messageDecoder: EntityDecoder[F, Message] = jsonOf[F, Message]
+  implicit val pingDecoder = jsonOf[IO, Ping]
+  implicit val pongEncoder = jsonEncoderOf[IO, Pong]
 
-    val service: HttpRoutes[F] = HttpRoutes.of[F] {
-      case GET -> Root / "welcome" =>
-        Ok(Message("welcome"))
-
-      case req @ POST -> Root / "echo" =>
-        req.as[Message].flatMap { message =>
-          Ok(message)
+  val service: HttpRoutes[IO] = HttpRoutes.of[IO] {
+    case req @ POST -> Root / "ping" =>
+      req.as[Ping].flatMap { ping =>
+        if (ping.value == "ping") {
+          Ok(Pong("pong!"))
+        } else {
+          BadRequest("Invalid request")
         }
-    }
+      }
   }
 }

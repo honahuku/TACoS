@@ -1,22 +1,17 @@
 package com.example.tacosbackend
 
-import cats.effect.{IO, IOApp}
-import org.http4s.server.middleware.Logger
-import org.http4s.ember.server.EmberServerBuilder
-import com.comcast.ip4s._
+import cats.effect._
+import org.http4s.server.blaze.BlazeServerBuilder
+import org.http4s.implicits._
 
-object TacosbackendServer extends IOApp.Simple {
+object TacosbackendServer extends IOApp {
 
-  def run: IO[Unit] = {
-    val sampleServiceInstance = SampleService[IO]
-    val httpApp = TacosbackendRoutes.sampleRoutes(sampleServiceInstance).orNotFound
-    val finalHttpApp = Logger.httpApp(true, true)(httpApp)
-
-    EmberServerBuilder.default[IO]
-      .withHost(ipv4"0.0.0.0")
-      .withPort(port"8080")
-      .withHttpApp(finalHttpApp)
-      .build
+  def run(args: List[String]): IO[ExitCode] = {
+    BlazeServerBuilder[IO]
+      .bindHttp(8080, "localhost")
+      .withHttpApp(TacosbackendRoutes.routes.orNotFound)
+      .resource
       .use(_ => IO.never)
+      .as(ExitCode.Success)
   }
 }

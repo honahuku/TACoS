@@ -1,8 +1,11 @@
 package com.example.tacosbackend
 
-import org.http4s.HttpRoutes
+import cats.effect._
+import org.http4s._
 
 object TacosbackendRoutes {
 
-  def sampleRoutes[F[_]](S: SampleService.SampleService[F]): HttpRoutes[F] = S.service
+  val pingPongService = new PingPongService
+
+  val routes: HttpRoutes[IO] = pingPongService.service
 }
