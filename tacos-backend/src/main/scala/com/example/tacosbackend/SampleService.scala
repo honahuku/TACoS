@@ -1,6 +1,6 @@
 package com.example.tacosbackend
 
-import cats.effect.{Concurrent, Sync}
+import cats.effect.Concurrent
 import cats.implicits._
 import io.circe.generic.auto._
 import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
