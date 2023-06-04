@@ -20,15 +20,19 @@ case class Ping(msg: String)
 // msgフィールドにはサーバーから送信されるメッセージが含まれる
 case class Pong(msg: String)
 
+// ErrorMsgはエラーメッセージを表す
+// msgフィールドにはエラーメッセージが含まれる
+case class ErrorMsg(msg: String)
+
 // アプリケーション層
 // PingPongServiceはPingメッセージの処理を担当するクラス
 class PingPongService {
   // handlePingメソッドはPingメッセージを受け取り、適切なPongメッセージを生成する
   // メッセージが"ping"であれば、"pong!"というメッセージを含むPongを返す
-  // それ以外のメッセージであれば、エラーメッセージを返す
-  def handlePing(ping: Ping): Either[String, Pong] = {
+  // それ以外のメッセージであれば、エラーメッセージを含むErrorMsgを返す
+  def handlePing(ping: Ping): Either[ErrorMsg, Pong] = {
     if (ping.msg == "ping") Right(Pong("pong!"))
-    else Left("Invalid message!")
+    else Left(ErrorMsg("Invalid message!"))
   }
 }
 
@@ -50,10 +54,10 @@ object PingPongServer extends IOApp {
       data.as[Ping] match {
         case Right(ping) =>
           service.handlePing(ping) match {
-            case Right(pong) => Ok(pong.asJson)
-            case Left(error) => BadRequest(error)
+            case Right(pong)    => Ok(pong.asJson)
+            case Left(errorMsg) => BadRequest(errorMsg.asJson)
           }
-        case _ => BadRequest("Invalid message!")
+        case _ => BadRequest(ErrorMsg("Invalid message!").asJson)
       }
     }
   }
