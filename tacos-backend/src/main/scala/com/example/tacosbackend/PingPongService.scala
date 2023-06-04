@@ -11,22 +11,55 @@ import io.circe.Json
 import io.circe.syntax._
 import scala.concurrent.ExecutionContext
 
+// ドメイン層
+// Pingはクライアントからのメッセージを表す
+// msgフィールドにはクライアントから送信されるメッセージが含まれる
 case class Ping(msg: String)
+
+// Pongはサーバーからのメッセージを表す
+// msgフィールドにはサーバーから送信されるメッセージが含まれる
 case class Pong(msg: String)
 
+// アプリケーション層
+// PingPongServiceはPingメッセージの処理を担当するクラス
+class PingPongService {
+  // handlePingメソッドはPingメッセージを受け取り、適切なPongメッセージを生成する
+  // メッセージが"ping"であれば、"pong!"というメッセージを含むPongを返す
+  // それ以外のメッセージであれば、エラーメッセージを返す
+  def handlePing(ping: Ping): Either[String, Pong] = {
+    if (ping.msg == "ping") Right(Pong("pong!"))
+    else Left("Invalid message!")
+  }
+}
+
+// プレゼンテーション層
+// PingPongServerはサーバーのエントリーポイント
+// このオブジェクトはサーバーの設定とルーティングを定義する
 object PingPongServer extends IOApp {
+  // Http4sのDSLをインポートする
   val dsl = Http4sDsl[IO]; import dsl._
 
-  val pingPongRoutes = HttpRoutes.of[IO] {
-    case req @ POST -> Root =>
-      req.decode[Json] { data =>
-        data.as[Ping] match {
-          case Right(ping) if ping.msg == "ping" => Ok(Pong("pong!").asJson)
-          case _ => BadRequest("Invalid message!")
-        }
+  // PingPongServiceのインスタンスを生成する
+  val service = new PingPongService
+
+  // pingPongRoutesはHTTPリクエストを処理するルートを定義する
+  // POSTリクエストを"/"エンドポイントで受け取り、リクエストボディに含まれるJSONをデコードする
+  // デコードが成功した場合、PingPongServiceを使用して適切なレスポンスを生成する
+  val pingPongRoutes = HttpRoutes.of[IO] { case req @ POST -> Root =>
+    req.decode[Json] { data =>
+      data.as[Ping] match {
+        case Right(ping) =>
+          service.handlePing(ping) match {
+            case Right(pong) => Ok(pong.asJson)
+            case Left(error) => BadRequest(error)
+          }
+        case _ => BadRequest("Invalid message!")
       }
+    }
   }
 
+  // runメソッドでサーバーを起動する
+  // ポートを指定してサーバーを起動し、定義したルートを使用する
   override def run(args: List[String]): IO[ExitCode] = {
     val pingPongApp = pingPongRoutes.orNotFound
 
