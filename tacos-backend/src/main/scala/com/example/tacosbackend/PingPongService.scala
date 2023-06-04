@@ -39,15 +39,17 @@ object PingPongServer extends IOApp {
   val service = new PingPongService
 
   // HTTPリクエストを処理するルートを定義する
-  // POSTリクエストを"/"エンドポイントで受け取り、リクエストボディに含まれるJSONをデコードする
+  // req @ で/を指定
   val pingPongRoutes = HttpRoutes.of[IO] { case req @ POST -> Root =>
     req.attemptAs[Json].value.flatMap {
+      // dataにデコードした結果がある
       case Right(data) =>
+        // pingオブジェクトとの比較
         data.as[Ping] match {
           case Right(ping) =>
             // デコードが成功した場合、PingPongServiceを使用して適切なレスポンスを生成する
             service.handlePing(ping) match {
-              case Right(pong)    => Ok(pong.asJson)
+              case Right(pong) => Ok(pong.asJson)
               // エラーメッセージを含むJSONを返す
               case Left(errorMsg) => BadRequest(errorMsg.asJson)
             }
